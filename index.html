@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGIY TABLES — Le Malraux</title>
+    <meta name="description" content="Réservation premium Le Malraux — simple, rapide et sans commission. Email + WhatsApp instantané. Optimisé DIGIY.">
+    <meta name="theme-color" content="#D4AF37">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="DIGIY TABLES">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <style>
+        :root{
+            --digiy-gold:#D4AF37;
+            --digiy-green:#16a34a;
+            --digiy-red:#dc2626;
+            --digiy-dark:#050505;
+            --digiy-grey:#111111;
+            --digiy-text-light:#E0E0E0;
+        }
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+            font-family:-apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+        }
+        body {
+            background-color: var(--digiy-dark);
+            color: var(--digiy-text-light);
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:16px;
+        }
+
+        .res-page-container {
+            width:100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: clamp(20px, 5vw, 40px);
+            background: radial-gradient(circle at top, #171717 0, #050505 55%);
+            border: 2px solid var(--digiy-gold);
+            border-radius: 18px;
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.32);
+        }
+        .res-header {
+            text-align: center;
+            border-bottom: 1px solid #262626;
+            padding-bottom: 15px;
+            margin-bottom: 22px;
+        }
+        .res-header h1 {
+            color: var(--digiy-text-light);
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            margin: 0;
+        }
+        .res-header p {
+            color: var(--digiy-gold);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 6px 0 0;
+        }
+        .res-badge {
+            margin-top:8px;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:4px 10px;
+            border-radius:999px;
+            border:1px solid rgba(212,175,55,0.6);
+            font-size:0.8rem;
+            color:var(--digiy-text-light);
+            background:rgba(0,0,0,0.5);
+        }
+        .res-badge-dot{
+            width:8px;
+            height:8px;
+            border-radius:999px;
+            background:var(--digiy-gold);
+            box-shadow:0 0 12px rgba(212,175,55,0.8);
+        }
+
+        .res-form label {
+            display: block;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            color: var(--digiy-text-light);
+            font-weight: 600;
+        }
+        .res-form input, .res-form select {
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background: #111;
+            color: var(--digiy-text-light);
+            margin-top: 6px;
+            font-size: 0.98rem;
+            box-sizing: border-box;
+        }
+        .res-form input:focus, .res-form select:focus {
+            border-color: var(--digiy-gold);
+            outline: none;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.6);
+        }
+        .res-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 6px;
+        }
+
+        #zone-status {
+            min-height: 18px;
+            margin-top: 6px;
+            font-size: 0.9rem;
+            color: var(--digiy-gold);
+        }
+        #res-zone option:disabled, #res-zone optgroup[label*="Non réservable"] option {
+            opacity: 0.5;
+            background: #000;
+            font-style: italic;
+            color: #999;
+        }
+
+        .res-submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #D4AF37, #f97316);
+            color: #050505;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+            box-shadow:0 14px 30px rgba(0,0,0,0.6);
+        }
+        .res-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:0 18px 40px rgba(0,0,0,0.8);
+        }
+        .res-submit-btn:active{
+            transform:translateY(0);
+            opacity:0.95;
+        }
+        #res-msg {
+            min-height: 25px;
+            margin-top: 14px;
+            text-align: center;
+            color: var(--digiy-gold);
+            font-size:0.9rem;
+        }
+
+        .res-foot-note{
+            margin-top:14px;
+            font-size:0.8rem;
+            color:#a3a3a3;
+            text-align:center;
+        }
+
+        @media (max-width:600px){
+            body{
+                padding:10px;
+            }
+            .res-page-container{
+                padding:18px 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="res-page-container" aria-labelledby="resto-title">
+        <div class="res-header">
+            <h1 id="resto-title">🍽️ Réservation — Le Malraux</h1>
+            <p>Partenaire DIGIY TABLES — 0% Commission</p>
+            <div class="res-badge">
+                <span class="res-badge-dot"></span>
+                <span>Réservation directe · Email + WhatsApp</span>
+            </div>
+        </div>
+
+        <form id="reservationForm" class="res-form" novalidate>
+            <div class="res-grid">
+                <label>Date
+                    <input type="date" name="date" required id="res-date-input">
+                </label>
+                <label>Heure
+                    <select name="heure" required>
+                        <option value="" disabled selected>— Choisir —</option>
+                        <optgroup label="Midi">
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                        </optgroup>
+                        <optgroup label="Soir">
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
+                        </optgroup>
+                    </select>
+                </label>
+                <label>Personnes
+                    <input type="number" name="personnes" required min="1" max="12" placeholder="Ex: 2">
+                </label>
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+                <label for="res-zone">
+                    Préférence de zone <span style="color:var(--digiy-gold);">*</span>
+                </label>
+                <select id="res-zone" name="zone" required aria-describedby="zone-help zone-status">
+                    <option value="" disabled selected>— Choisir une zone —</option>
+                    <optgroup label="Réservable">
+                        <option value="Salle A" data-capacity="30">Salle A RDC (30)</option>
+                        <option value="Terrasse" data-capacity="40">Terrasse (40)</option>
+                    </optgroup>
+                    <optgroup label="Non réservable (accès direct)">
+                        <option value="Salle B" disabled>Salle B RDC (20) — accès direct</option>
+                        <option value="Bar" disabled>Bar / Lounge — accès direct</option>
+                    </optgroup>
+                </select>
+                <small id="zone-help" style="display:block;margin-top:6px;opacity:.8;color:#B0B0B0;font-size:0.8rem;">
+                    Les zones “accès direct” ne se réservent pas en ligne.
+                </small>
+                <div id="zone-status" aria-live="polite"></div>
+            </div>
+
+            <label>Nom & prénom
+                <input type="text" name="nom" required placeholder="Ex : Mme Diop, M. Ndiaye…">
+            </label>
+            <label>Téléphone (WhatsApp de préférence)
+                <input type="tel" name="whatsapp" required placeholder="+33 ou +221 …">
+            </label>
+            <label>Email (confirmation)
+                <input type="email" name="email" required placeholder="exemple@mail.com">
+            </label>
+
+            <label>Message au restaurant (optionnel)
+                <input type="text" name="message" placeholder="Allergies, occasion spéciale, demande précise…">
+            </label>
+            
+            <button type="submit" class="res-submit-btn">✅ Confirmer la réservation</button>
+            <div id="res-msg"></div>
+            <div class="res-foot-note">
+                En validant, vous ouvrez votre Mail et WhatsApp pour envoyer la demande au restaurant. 
+                La réservation est confirmée uniquement après retour du Malraux.
+            </div>
+        </form>
+    </section>
+
+    <script>
+    (function(){
+        const form = document.getElementById('reservationForm');
+        const sel = document.getElementById('res-zone');
+        const status = document.getElementById('zone-status');
+        const submitBtn = form.querySelector('.res-submit-btn');
+        const resMsg = document.getElementById('res-msg');
+        const dateInput = document.getElementById('res-date-input');
+
+        const WA_NUMBER_FR = '33638329423';
+        const RESTO_EMAIL = 'digiylyfe@gmail.com';
+
+        function setMinDate() {
+            if (!dateInput) return;
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            dateInput.setAttribute('min', minDate);
+        }
+
+        function updateStatus(){
+            const opt = sel.options[sel.selectedIndex];
+            if (!opt || !opt.value){
+                status.textContent = '';
+                status.style.color = 'var(--digiy-gold)';
+                return;
+            }
+
+            const optgroup = opt.parentElement && opt.parentElement.label ? opt.parentElement.label.toLowerCase() : '';
+            const isNonReservable = optgroup.includes('non réservable');
+
+            if (isNonReservable || opt.disabled){
+                status.textContent = '⛔ Cette zone est en accès direct et n’est pas réservable en ligne.';
+                status.style.color = 'var(--digiy-red)';
+                setTimeout(() => {
+                    sel.value = '';
+                    if (sel.value === '') status.textContent = '';
+                }, 2500);
+                sel.blur();
+                return;
+            }
+
+            const cap = opt.getAttribute('data-capacity');
+            status.textContent = cap ? `✅ Zone réservable. Capacité indicative : ${cap} places.` : '✅ Zone réservable.';
+            status.style.color = 'var(--digiy-green)';
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!form.checkValidity()){
+                form.reportValidity();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Envoi de la demande…';
+            resMsg.textContent = 'Veuillez accepter l’ouverture de votre Mail et, si proposé, de WhatsApp.';
+
+            const fd = new FormData(form);
+            let message = `📝 Nouvelle Réservation TABLE — Le Malraux\n\n`;
+            for (const [k, v] of fd.entries()) {
+                const label = k.charAt(0).toUpperCase() + k.slice(1);
+                message += `• ${label} : ${v}\n`;
+            }
+            message += `\n⏱️ Envoyé le : ${new Date().toLocaleString('fr-FR')}`;
+
+            const mailtoLink = 'mailto:' + RESTO_EMAIL
+                + '?subject=' + encodeURIComponent('Nouvelle Réservation — Le Malraux - ' + fd.get('nom'))
+                + '&body=' + encodeURIComponent(message);
+            window.location.href = mailtoLink;
+
+            const waText = `Nouvelle réservation Le Malraux : ${fd.get('date')} à ${fd.get('heure')} pour ${fd.get('personnes')} pers. Contact: ${fd.get('whatsapp')} (${fd.get('nom')}).`;
+            const waLink = 'https://wa.me/' + WA_NUMBER_FR + '?text=' + encodeURIComponent(waText); 
+            
+            setTimeout(() => {
+                window.open(waLink, '_blank', 'noopener');
+            }, 600);
+
+            setTimeout(() => {
+                form.innerHTML = `
+                    <div style="text-align:center;">
+                        <h3 style="color:var(--digiy-gold); margin-top:0;">
+                            🎉 Demande envoyée au Malraux !
+                        </h3>
+                        <p style="color:var(--digiy-green); font-weight:700; margin-top:8px;">
+                            Le restaurant vous recontacte rapidement pour confirmer la réservation.
+                        </p>
+                        <p style="color:#B0B0B0; font-size:0.9rem;margin-top:6px;">
+                            Surveillez vos messages (email & WhatsApp).
+                        </p>
+                        <a href="./" style="color:var(--digiy-gold); display:block; margin-top:18px; text-decoration:none;">
+                            ⬅️ Faire une nouvelle demande
+                        </a>
+                    </div>
+                `;
+                resMsg.textContent = '';
+            }, 1200);
+        });
+
+        sel.addEventListener('change', updateStatus);
+        window.addEventListener('load', () => {
+            setMinDate();
+            updateStatus();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').catch(function(err){
+                    console.error('SW registration failed', err);
+                });
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
